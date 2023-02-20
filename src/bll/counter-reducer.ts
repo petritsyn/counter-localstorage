@@ -1,7 +1,5 @@
-import {AppRootStateType, AppThunk} from "./redux";
-
 type InitialStateType = typeof initialState
-export type ActionsTypes = ReturnType<typeof incrementAC> | ReturnType<typeof setValueFromLocalStoreageAC>
+export type ActionsTypes = ReturnType<typeof incrementAC>
 
 const initialState = {
     value: 0
@@ -15,26 +13,9 @@ export function counterReducer(state: InitialStateType = initialState, action: A
                 value: state.value + 1
             }
         }
-        case "SET-VALUE-FROM-LOCAL-STORAGE": {
-            return {
-                ...state,
-                value: action.value
-            }
-        }
         default:
             return state
     }
 }
 
 export const incrementAC = () => ({type: 'INCREMENT-VALUE'} as const);
-export const setValueFromLocalStoreageAC = (value: number) => ({type: 'SET-VALUE-FROM-LOCAL-STORAGE', value} as const);
-
-export const incrementTC = (): AppThunk => (dispatch, getState: () => AppRootStateType) => {
-    localStorage.setItem('counterValue', JSON.stringify(getState().counter.value + 1))
-    dispatch(incrementAC())
-}
-
-export const getValueTC = (): AppThunk => (dispatch) => {
-    let value = localStorage.getItem('counterValue')
-    if (value) dispatch(setValueFromLocalStoreageAC(+value))
-}

@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootStateType} from "./bll/redux";
-import {getValueTC, incrementAC, incrementTC} from "./bll/counter-reducer";
+import {incrementAC} from "./bll/counter-reducer";
 import {useAppDispatch} from "./hooks";
 
 const App: React.FC = () => {
@@ -10,12 +10,8 @@ const App: React.FC = () => {
     let value = useSelector<AppRootStateType, number>(store => store.counter.value)
     let dispatch = useAppDispatch()
 
-    useEffect(() => {
-        dispatch(getValueTC())
-    }, [])
-
     const onClickHandler = () => {
-        dispatch(incrementTC())
+        dispatch(incrementAC())
     }
 
     return <div className={'app'}>
